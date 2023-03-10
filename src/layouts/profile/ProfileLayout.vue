@@ -1,90 +1,85 @@
 <template>
-  <div :style="layoutHeight">
-    <q-layout view="hHh lpR fFf">
-      <q-drawer
-        show-if-above
-        v-model="leftDrawerOpen"
-        side="left"
-        bordered
-        :width="291"
-        class="q-pt-md bg-white text-white"
+  <q-layout view="hHh lpR fFf">
+    <q-drawer
+      show-if-above
+      v-model="leftDrawerOpen"
+      side="left"
+      bordered
+      :width="291"
+      class="q-pt-md bg-white text-white"
+    >
+      <q-tabs
+        v-model="tab"
+        dense
+        class="text-black"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
+        narrow-indicator
       >
-        <q-tabs
-          v-model="tab"
-          dense
-          class="text-black"
-          active-color="primary"
-          indicator-color="primary"
-          align="justify"
-          narrow-indicator
-        >
-          <q-tab name="personal" label="개인" />
-          <q-tab name="group" label="소속" />
-          <q-tab name="all" label="전체" />
-        </q-tabs>
-        <q-separator />
+        <q-tab name="personal" label="개인" />
+        <q-tab name="group" label="소속" />
+        <q-tab name="all" label="전체" />
+      </q-tabs>
+      <q-separator />
 
-        <q-tab-panels v-model="tab">
-          <q-tab-panel name="personal">
-            <q-input
-              label="사용자검색"
-              ref="filterRef"
-              v-model="filter"
-              filled
-              type="search"
-            >
-              <template v-slot:prepend>
-                <q-icon name="search" />
-              </template>
-              <template v-slot:append>
-                <q-icon
-                  v-if="filter !== ''"
-                  name="clear"
-                  class="cursor-pointer"
-                  @click="resetFilter"
-                />
-              </template>
-            </q-input>
-            <q-tree
-              icon="play_circle"
-              :nodes="simple"
-              node-key="label"
-              :filter="filter"
-              no-connectors
-              v-model:expanded="expanded"
-            />
-          </q-tab-panel>
+      <q-tab-panels v-model="tab">
+        <q-tab-panel name="personal">
+          <q-input
+            label="사용자검색"
+            ref="filterRef"
+            v-model="filter"
+            filled
+            type="search"
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+            <template v-slot:append>
+              <q-icon
+                v-if="filter !== ''"
+                name="clear"
+                class="cursor-pointer"
+                @click="resetFilter"
+              />
+            </template>
+          </q-input>
+          <q-tree
+            icon="play_circle"
+            :nodes="simple"
+            node-key="label"
+            :filter="filter"
+            no-connectors
+            v-model:expanded="expanded"
+          />
+        </q-tab-panel>
 
-          <q-tab-panel name="group">
-            <q-input v-model="search" filled type="search">
-              <template v-slot:prepend>
-                <q-icon name="search" />
-              </template>
-            </q-input>
-          </q-tab-panel>
+        <q-tab-panel name="group">
+          <q-input v-model="search" filled type="search">
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </q-tab-panel>
 
-          <q-tab-panel name="all">
-            <q-input v-model="search" filled type="search">
-              <template v-slot:prepend>
-                <q-icon name="search" />
-              </template>
-            </q-input>
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-drawer>
+        <q-tab-panel name="all">
+          <q-input v-model="search" filled type="search">
+            <template v-slot:prepend>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-drawer>
 
-      <q-page-container>
-        <router-view />
-      </q-page-container>
-    </q-layout>
-  </div>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useQuasar } from 'quasar';
-
-const $q = useQuasar();
+import { ref } from 'vue';
 
 const tab = ref('personal');
 const search = ref('');
@@ -96,10 +91,6 @@ const leftDrawerOpen = ref(false);
 const rightDrawerOpen = ref(false);
 
 const expanded = ref(['인천힘찬종합병원', 'Good food (with icon)']);
-
-const layoutHeight = computed(() => ({
-  height: $q.screen.height - 151 + 'px',
-}));
 
 const simple = [
   {

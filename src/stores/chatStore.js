@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useCounterStore = defineStore('chat', {
   state: () => ({
-    list: [
+    lists: [
       {
         index: 1,
         personName: '김힘찬',

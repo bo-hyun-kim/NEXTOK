@@ -17,8 +17,8 @@
           </div>
         </div>
       </q-card>
-      <q-list>
-        <q-item clickable v-ripple active-class="bg-yellow" to="/chat/message">
+      <q-list v-for="(list, i) in lists" :key="i">
+        <q-item clickable active-class="bg-yellow" to="/chat/message">
           <q-item-section avatar>
             <q-avatar>
               <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
@@ -27,28 +27,36 @@
 
           <q-item-section>
             <q-item-label width="100%" lines="1"
-              >{{ personName }}
-              <q-badge style="margin: auto" color="blue" rounded>
+              >{{ list.personName }}
+              <q-badge
+                v-if="list.person"
+                style="margin: auto"
+                color="blue"
+                rounded
+              >
                 <q-icon name="person" color="white" />
-                {{ person }}
+                {{ list.person }}
               </q-badge></q-item-label
             >
             <q-item-label width="100%" lines="2" caption>{{
-              lastContent
+              list.lastContent
             }}</q-item-label>
           </q-item-section>
 
           <q-item-section side>
             <q-item-label caption class="row justify-end">
-              {{ time }}
+              {{ list.time }}
             </q-item-label>
-            <q-badge style="margin: auto" color="red" rounded>
-              {{ counter }}
+            <q-badge
+              v-if="list.counter"
+              style="margin: auto"
+              color="red"
+              rounded
+            >
+              {{ list.counter }}
             </q-badge>
           </q-item-section>
         </q-item>
-
-        <q-separator inset="item" />
       </q-list>
     </q-drawer>
     <q-page-container>
@@ -62,5 +70,7 @@ import { useCounterStore } from 'src/stores/chatStore';
 import { storeToRefs } from 'pinia';
 
 const main = useCounterStore();
-const { personName, person, time, lastContent, counter } = storeToRefs(main);
+
+const { personName, person, time, lastContent, counter, lists } =
+  storeToRefs(main);
 </script>

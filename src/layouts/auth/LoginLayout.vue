@@ -1,4 +1,3 @@
-a
 <template>
   <div>
     <q-input

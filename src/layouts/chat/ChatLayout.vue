@@ -13,7 +13,7 @@
         </div>
       </q-card>
       <q-list>
-        <q-item clickable v-ripple to="/Chat/KHU">
+        <q-item clickable v-ripple to="/chat/message">
           <q-item-section avatar>
             <q-avatar>
               <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
@@ -42,7 +42,7 @@
 
         <q-separator inset="item" />
 
-        <q-item clickable v-ripple to="/Chat/KBH">
+        <q-item clickable v-ripple to="/chat/message">
           <q-item-section avatar>
             <q-avatar>
               <img src="https://cdn.quasar.dev/img/avatar3.jpg" />
@@ -61,12 +61,8 @@
 
         <q-separator inset="item" />
 
-        <q-item clickable v-ripple to="/Chat/KKH">
-          <q-item-section avatar>
-            <q-avatar>
-              <img src="src/assets/RbRb.png" />
-            </q-avatar>
-          </q-item-section>
+        <q-item clickable v-ripple to="/chat/message">
+          <q-item-section avatar> </q-item-section>
 
           <q-item-section>
             <q-item-label lines="1">김광휘</q-item-label>
@@ -87,6 +83,6 @@
 import { useCounterStore } from 'src/stores/chatStore';
 import { storeToRefs } from 'pinia';
 
-const main = useCounterStore();
-const { personName, person, time, lastContent, counter } = storeToRefs(main);
+const chat = useCounterStore();
+const { personName, person, time, lastContent, counter } = storeToRefs(chat);
 </script>

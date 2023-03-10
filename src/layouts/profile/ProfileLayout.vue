@@ -55,19 +55,64 @@
         </q-tab-panel>
 
         <q-tab-panel name="group">
-          <q-input v-model="search" filled type="search">
+          <q-input
+            label="사용자검색"
+            ref="filterRef"
+            v-model="filter"
+            filled
+            type="search"
+          >
             <template v-slot:prepend>
               <q-icon name="search" />
             </template>
+            <template v-slot:append>
+              <q-icon
+                v-if="filter !== ''"
+                name="clear"
+                class="cursor-pointer"
+                @click="resetFilter"
+              />
+            </template>
           </q-input>
+          <q-tree
+            icon="play_circle"
+            :nodes="simple"
+            node-key="label"
+            :filter="filter"
+            no-connectors
+            v-model:expanded="expanded"
+          />
         </q-tab-panel>
 
         <q-tab-panel name="all">
-          <q-input v-model="search" filled type="search">
+          <q-input
+            label="사용자검색"
+            ref="filterRef"
+            v-model="filter"
+            filled
+            type="search"
+          >
             <template v-slot:prepend>
               <q-icon name="search" />
             </template>
+            <template v-slot:append>
+              <q-icon
+                v-if="filter !== ''"
+                name="clear"
+                class="cursor-pointer"
+                @click="resetFilter"
+              />
+            </template>
           </q-input>
+          <q-tree
+            icon="play_circle"
+            :nodes="simple"
+            node-key="label"
+            :filter="filter"
+            no-connectors
+            default-expand-all
+            v-model:expanded="expanded"
+          />
         </q-tab-panel>
       </q-tab-panels>
     </q-drawer>
@@ -133,7 +178,7 @@ const simple = [
             ],
           },
           { label: '신경내과' },
-          { label: '홍길동', icon: 'account_circle' },
+          { label: '홍길동', icon: 'account_circle', color: '#ccc' },
           { label: '김대장', icon: 'account_circle' },
           { label: '이협력', icon: 'account_circle' },
           { label: '박본부', icon: 'account_circle' },

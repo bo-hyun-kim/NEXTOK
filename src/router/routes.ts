@@ -13,6 +13,12 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/chat',
         component: () => import('layouts/chat/ChatLayout.vue'),
+        children: [
+          {
+            path: '/chat/message',
+            component: () => import('layouts/chat/MessageLayout.vue'),
+          },
+        ],
       },
     ],
   },

@@ -1,61 +1,82 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-drawer
-      show-if-above
-      v-model="leftDrawerOpen"
-      side="left"
-      bordered
-      :width="300"
-      class="q-pt-md bg-white text-white"
-    >
-      <q-tabs
-        v-model="tab"
-        dense
-        class="text-black"
-        active-color="primary"
-        indicator-color="primary"
-        align="justify"
-        narrow-indicator
-      >
-        <q-tab name="mails" label="개인" />
-        <q-tab name="alarms" label="소속" />
-        <q-tab name="movies" label="전체" />
-      </q-tabs>
-      <q-separator />
+    <q-drawer show-if-above side="left" bordered :breakpoint="800">
+      <q-card flat style="width: 100%; height: 50px">
+        <div class="row justify-between">
+          <div class="q-pa-sm q-ml-md">
+            <p class="text-h6">채팅</p>
+          </div>
+          <div class="q-pa-sm">
+            <q-btn flat dense icon="playlist_add_check" size="md"></q-btn>
+            <q-btn flat dense icon="add" size="md"></q-btn>
+          </div>
+        </div>
+      </q-card>
+      <q-list>
+        <q-item clickable v-ripple to="/Chat/KHU">
+          <q-item-section avatar>
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+            </q-avatar>
+          </q-item-section>
 
-      <q-tab-panels v-model="tab" animated>
-        <q-tab-panel name="mails">
-          <q-input v-model="search" filled type="search">
-            <template v-slot:prepend>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-          <q-tree
-            :nodes="simple"
-            node-key="label"
-            no-connectors
-            v-model:expanded="expanded"
-          />
-        </q-tab-panel>
+          <q-item-section>
+            <q-item-label lines="1">{{ personName }}</q-item-label>
+            <q-item-label>{{ person }}</q-item-label>
+            <q-item-label lines="2" caption>{{ lastContent }}</q-item-label>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label class="row justify-end" right side>{{
+              time
+            }}</q-item-label>
+            <q-badge
+              style="margin: auto"
+              color="red"
+              rounded
+              class="row justify-end"
+            >
+              {{ counter }}
+            </q-badge>
+          </q-item-section>
+        </q-item>
 
-        <q-tab-panel name="alarms">
-          <q-input v-model="search" filled type="search">
-            <template v-slot:prepend>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </q-tab-panel>
+        <q-separator inset="item" />
 
-        <q-tab-panel name="movies">
-          <q-input v-model="search" filled type="search">
-            <template v-slot:prepend>
-              <q-icon name="search" />
-            </template>
-          </q-input>
-        </q-tab-panel>
-      </q-tab-panels>
+        <q-item clickable v-ripple to="/Chat/KBH">
+          <q-item-section avatar>
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/img/avatar3.jpg" />
+            </q-avatar>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label lines="1">김보현</q-item-label>
+            <q-item-label caption lines="2">
+              으아아아아아아앙아아아아
+            </q-item-label>
+          </q-item-section>
+
+          <q-item-section side top> 5 분전 </q-item-section>
+        </q-item>
+
+        <q-separator inset="item" />
+
+        <q-item clickable v-ripple to="/Chat/KKH">
+          <q-item-section avatar>
+            <q-avatar>
+              <img src="src/assets/RbRb.png" />
+            </q-avatar>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label lines="1">김광휘</q-item-label>
+            <q-item-label caption lines="2"> 헤헤헤헿 </q-item-label>
+          </q-item-section>
+
+          <q-item-section side top> 11 분전 </q-item-section>
+        </q-item>
+      </q-list>
     </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -63,95 +84,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-const tab = ref('mails');
-const search = ref('사용자검색');
+import { useCounterStore } from 'src/stores/chatStore';
+import { storeToRefs } from 'pinia';
 
-const leftDrawerOpen = ref(false);
-const rightDrawerOpen = ref(false);
-
-const expanded = ref(['인천힘찬종합병원', 'Good food (with icon)']);
-
-const simple = [
-  {
-    label: '인천힘찬종합병원',
-    children: [
-      {
-        label: '의료원장(병원장)',
-        children: [{ label: 'Quality ingredients' }, { label: 'Good recipe' }],
-      },
-      {
-        label: '진료원장',
-        disabled: true,
-        children: [
-          { label: 'Prompt attention' },
-          { label: 'Professional waiter' },
-        ],
-      },
-      {
-        label: '의료행정본부장',
-        disabled: true,
-        children: [
-          { label: 'Prompt attention' },
-          { label: 'Professional waiter' },
-        ],
-      },
-      {
-        label: '진료부원장',
-        children: [
-          {
-            label: '소화기내과',
-            children: [
-              {
-                label: '김소화',
-                icon: 'account_circle',
-              },
-              {
-                label: '이내과',
-                icon: 'account_circle',
-              },
-            ],
-          },
-          { label: '신경내과' },
-          { label: '홍길동', icon: 'account_circle' },
-          { label: '김대장', icon: 'account_circle' },
-          { label: '이협력', icon: 'account_circle' },
-          { label: '박본부', icon: 'account_circle' },
-        ],
-      },
-      {
-        label: '응급의료센터',
-        disabled: true,
-        children: [
-          { label: 'Prompt attention' },
-          { label: 'Professional waiter' },
-        ],
-      },
-      {
-        label: '간호과',
-        disabled: true,
-        children: [
-          { label: 'Prompt attention' },
-          { label: 'Professional waiter' },
-        ],
-      },
-      {
-        label: '종합행정과',
-        disabled: true,
-        children: [
-          { label: 'Prompt attention' },
-          { label: 'Professional waiter' },
-        ],
-      },
-      {
-        label: '원무과',
-        disabled: true,
-        children: [
-          { label: 'Prompt attention' },
-          { label: 'Professional waiter' },
-        ],
-      },
-    ],
-  },
-];
+const main = useCounterStore();
+const { personName, person, time, lastContent, counter } = storeToRefs(main);
 </script>

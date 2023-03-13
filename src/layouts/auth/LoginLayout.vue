@@ -39,7 +39,8 @@ function login() {
   api
     .post('/auth/login', params)
     .then(function (response) {
-      if (response.data.returnCode === 200) {
+      console.log(response.data);
+      if (response.data.returnCode === '200') {
         console.log('로그인 성공');
         router.push('/');
         return;

@@ -1,3 +1,4 @@
+a
 <template>
   <div>
     <q-input
@@ -29,22 +30,21 @@ const idText = ref();
 const pwdText = ref();
 
 function login() {
-  let params = {
-    userid: idText.value,
-    password: pwdText.value,
-    deviceid: '28b1df67-e053-37b6-a136-9af2051a45ed',
-  };
+  const params = new URLSearchParams();
+  params.append('userid', idText.value);
+  params.append('password', pwdText.value);
+  params.append('deviceid', '28b1df67-e053-37b6-a136-9af2051a45ed');
+  params.append('forceLogout', 1);
 
   api
-    .post('/auth/login', {
-      userid: params.userid,
-      password: params.password,
-      deviceid: params.deviceid,
-    })
+    .post('/auth/login', params)
     .then(function (response) {
-      console.log(response.data.returnCode + ': 로그인 성공');
-      console.log(response);
-      router.push('/');
+      if (response.data.returnCode === 200) {
+        console.log('로그인 성공');
+        router.push('/');
+        return;
+      }
+      console.log('로그인 에러');
     })
     .catch(function (error) {
       console.log(error);

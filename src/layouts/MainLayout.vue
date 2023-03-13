@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hhh lpR fFf">
-    <q-header class="bg-grey-1" bordered style="height: 43px">
+    <!-- <q-header class="bg-grey-1" bordered style="height: 43px">
       <q-toolbar class="text-h5 q-pl-md q-pb-sm q-pr-none">
         <div class="text-indigo text-h6">Himchan-</div>
         <div class="text-amber-10 text-h6">Talk</div>
@@ -9,7 +9,7 @@
         <q-btn icon="crop_square" flat dense color="grey-8"></q-btn>
         <q-btn icon="close" flat dense color="grey-8"></q-btn>
       </q-toolbar>
-    </q-header>
+    </q-header> -->
 
     <q-drawer
       show-if-above

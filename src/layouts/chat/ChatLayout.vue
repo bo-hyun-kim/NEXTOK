@@ -1,12 +1,11 @@
 <template>
   <q-layout view="hHh lpR fFf">
     <q-drawer show-if-above side="left" bordered :breakpoint="800">
-      <q-card flat style="width: 100%; height: 50px">
+      <q-card flat style="width: 100%; height: 50px" class="q-mb-sm">
         <div class="row justify-between">
           <div style="width: 100%">
             <q-input
               outlined
-              dense
               bg-color="white"
               placeholder="채팅방, 참여자 검색"
             >
@@ -18,7 +17,16 @@
         </div>
       </q-card>
       <q-list v-for="(list, i) in lists" :key="i">
-        <q-item clickable active-class="bg-yellow" to="/chat/message">
+        <q-item
+          ref="element"
+          clickable
+          v-ripple
+          :id="i"
+          :active="i === seq"
+          @click="seq = i"
+          to="/chat/message"
+          active-class="bg-yellow-2"
+        >
           <q-item-section avatar>
             <q-avatar>
               <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
@@ -68,9 +76,10 @@
 <script setup>
 import { useCounterStore } from 'src/stores/chatStore';
 import { storeToRefs } from 'pinia';
+import { ref, onMounted, onUpdated } from 'vue';
 
 const main = useCounterStore();
-
-const { personName, person, time, lastContent, counter, lists } =
-  storeToRefs(main);
+const element = ref(null);
+const { lists } = storeToRefs(main);
+const seq = ref('');
 </script>

@@ -17,6 +17,7 @@ a
       label="비밀번호"
     ></q-input>
     <q-btn class="q-pa-sm" @click="login()">로그인</q-btn>
+    <q-btn class="q-pa-sm" @click="message()">메시지</q-btn>
   </div>
 </template>
 <script setup>
@@ -37,10 +38,33 @@ function login() {
   params.append('forceLogout', 1);
 
   api
-    .post('/auth/login', params)
+    .post(
+      '/auth/login',
+      params,
+      { withCredentials: true },
+      { 'Access-Control-Allow-Origin': '*' }
+    )
     .then(function (response) {
-      console.log(response.data);
-      if (response.data.returnCode === '200') {
+      if (response.data.returnCode === 200) {
+        console.log('로그인 성공');
+        router.push('/');
+        return;
+      }
+      console.log('로그인 에러');
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+function message() {
+  const params = new URLSearchParams();
+  params.append('userid', idText.value);
+
+  api
+    .post('/campus/unread/message/my', params)
+    .then(function (response) {
+      if (response.data.returnCode === 200) {
         console.log('로그인 성공');
         router.push('/');
         return;

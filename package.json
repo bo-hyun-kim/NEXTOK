@@ -2,7 +2,7 @@
   "name": "nex-chat",
   "version": "0.0.1",
   "description": "A Quasar Project",
-  "productName": "Quasar App",
+  "productName": "Himchan-Talk",
   "author": "bohyun <83568962+bo-hyun-kim@users.noreply.github.com>",
   "private": true,
   "scripts": {
@@ -11,6 +11,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.9",
     "@quasar/extras": "^1.0.0",
     "axios": "^1.2.1",
     "pinia": "^2.0.11",

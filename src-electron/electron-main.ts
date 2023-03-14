@@ -1,6 +1,9 @@
 import { app, BrowserWindow, nativeTheme } from 'electron';
+import { initialize, enable } from '@electron/remote/main';
 import path from 'path';
 import os from 'os';
+
+initialize();
 
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
@@ -24,8 +27,13 @@ function createWindow() {
     width: 1000,
     height: 600,
     useContentSize: true,
-    frame: false,
     autoHideMenuBar: true,
+    // titleBarStyle: 'hidden',
+    // titleBarOverlay: {
+    //   color: '#f2f4f8',
+    //   symbolColor: '#666666',
+    // },
+    frame: false,
     webPreferences: {
       contextIsolation: true,
       sandbox: false,
@@ -33,6 +41,8 @@ function createWindow() {
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
     },
   });
+
+  enable(mainWindow.webContents);
 
   mainWindow.loadURL(process.env.APP_URL);
 

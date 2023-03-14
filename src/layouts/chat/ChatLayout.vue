@@ -24,7 +24,7 @@
           :id="i"
           :active="i === seq"
           @click="seq = i"
-          to="/chat/message"
+          to="/auth/login"
           active-class="bg-yellow-2"
         >
           <q-item-section avatar>

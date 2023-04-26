@@ -1,6 +1,7 @@
-import { app, BrowserWindow, nativeTheme } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeTheme, session } from 'electron';
 import { initialize, enable } from '@electron/remote/main';
 import path from 'path';
+
 import os from 'os';
 
 initialize();
@@ -27,16 +28,12 @@ function createWindow() {
     width: 1000,
     height: 600,
     useContentSize: true,
-    autoHideMenuBar: true,
-    // titleBarStyle: 'hidden',
-    // titleBarOverlay: {
-    //   color: '#f2f4f8',
-    //   symbolColor: '#666666',
-    // },
-    frame: false,
+    // autoHideMenuBar: true,
+    // frame: false,
     webPreferences: {
       contextIsolation: true,
       sandbox: false,
+      nodeIntegration: true,
       // More info: https://v2.quasar.dev/quasar-cli-vite/developing-electron-apps/electron-preload-script
       preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
     },
@@ -46,13 +43,14 @@ function createWindow() {
 
   mainWindow.loadURL(process.env.APP_URL);
 
+  //process.env.DEBUGGING
   if (process.env.DEBUGGING) {
     // if on DEV or Production with debug enabled
     mainWindow.webContents.openDevTools();
   } else {
     // we're on production; no access to devtools pls
     mainWindow.webContents.on('devtools-opened', () => {
-      mainWindow?.webContents.closeDevTools();
+      // mainWindow?.webContents.closeDevTools();
     });
   }
 
@@ -73,4 +71,18 @@ app.on('activate', () => {
   if (mainWindow === undefined) {
     createWindow();
   }
+});
+
+ipcMain.handle('testChannel:test', () => {
+  console.log('test : Im in Main.js');
+  return {
+    // setCookie(cookie: string) {
+    //   session.defaultSession.cookies.set({
+    //     url: 'http://192.168.0.189:80', // 기본적으로 입력 해주어야함
+    //     name: 'JSESSIONID',
+    //     value: cookie,
+    //     httpOnly: true,
+    //   });
+    // },
+  };
 });

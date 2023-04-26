@@ -28,8 +28,12 @@
  * }
  */
 
-import { contextBridge } from 'electron';
+import { contextBridge, ipcRenderer, session } from 'electron';
 import { BrowserWindow } from '@electron/remote';
+
+contextBridge.exposeInMainWorld('testChannel', {
+  test: () => ipcRenderer.invoke('testChannel:test'),
+});
 
 contextBridge.exposeInMainWorld('myWindowAPI', {
   minimize() {
